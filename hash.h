@@ -42,7 +42,7 @@ public:
    {
    }
    unordered_set(unordered_set&  rhs)
-    //: buckets(rhs.buckets), numElements(rhs.numElements)
+    : buckets(rhs.buckets), numElements(rhs.numElements)
    {
    }
    unordered_set(unordered_set&& rhs)
@@ -60,14 +60,14 @@ public:
    //
    unordered_set& operator=(unordered_set& rhs)
    {
-       //buckets(rhs.buckets);
-       //numElements(rhs.numElements);
+       buckets = rhs.buckets;
+       numElements = rhs.numElements ;
       return *this;
    }
    unordered_set& operator=(unordered_set&& rhs)
    {
-       //buckets.move(rhs.buckets);
-       //numElements.move(rhs.numElements);
+       buckets.move(rhs.buckets);
+       numElements.move(rhs.numElements);
       return *this;
    }
    unordered_set& operator=(const std::initializer_list<T>& il)
@@ -76,8 +76,8 @@ public:
    }
    void swap(unordered_set& rhs)
    {
-       //buckets.swap(rhs.buckets);
-       //numElements.swap(rhs.numElements);
+       buckets.swap(rhs.buckets);
+       numElements.swap(rhs.numElements);
    }
 
    // 
