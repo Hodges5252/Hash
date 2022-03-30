@@ -42,7 +42,7 @@ public:
    {
    }
    unordered_set(unordered_set&  rhs)
-    : buckets(rhs.buckets), numElements(rhs.numElements)
+    //: buckets(rhs.buckets), numElements(rhs.numElements)
    {
    }
    unordered_set(unordered_set&& rhs)
@@ -60,14 +60,14 @@ public:
    //
    unordered_set& operator=(unordered_set& rhs)
    {
-       buckets = rhs.buckets;
-       numElements = rhs.numElements ;
+       //buckets = rhs.buckets;
+       //numElements = rhs.numElements ;
       return *this;
    }
    unordered_set& operator=(unordered_set&& rhs)
    {
-       buckets.move(rhs.buckets);
-       numElements.move(rhs.numElements);
+       //buckets.move(rhs.buckets);
+       //numElements.move(rhs.numElements);
       return *this;
    }
    unordered_set& operator=(const std::initializer_list<T>& il)
@@ -76,8 +76,8 @@ public:
    }
    void swap(unordered_set& rhs)
    {
-       buckets.swap(rhs.buckets);
-       numElements.swap(rhs.numElements);
+       //buckets.swap(rhs.buckets);
+       //numElements.swap(rhs.numElements);
    }
 
    // 
@@ -123,6 +123,8 @@ public:
    //
    void clear() noexcept
    {
+       
+       numElements = 0;
    }
    iterator erase(const T& t);
 
@@ -131,11 +133,16 @@ public:
    //
    size_t size() const 
    { 
-      return 99;
+      return numElements;
    }
    bool empty() const 
-   { 
-      return false;
+   {
+       if(numElements <= 0)
+       {
+           return true;
+       }
+       else
+           return false;
    }
    size_t bucket_count() const //returns 10
    { 
@@ -370,6 +377,6 @@ typename unordered_set <T> ::iterator & unordered_set<T>::iterator::operator ++ 
 template <typename T>
 void swap(unordered_set<T>& lhs, unordered_set<T>& rhs)
 {
+    lhs.swap(rhs);
 }
-
 }
