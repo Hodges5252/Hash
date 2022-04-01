@@ -44,7 +44,7 @@ namespace custom
         unordered_set(unordered_set& rhs)
             : numElements(rhs.numElements)
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 10; i++) // since this is an occupied array we need to manually initialize
                 buckets[i] = rhs.buckets[i];
         }
         unordered_set(unordered_set&& rhs)
@@ -62,7 +62,7 @@ namespace custom
         //
         unordered_set& operator=(unordered_set& rhs)
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 10; i++)        
                 buckets[i] = rhs.buckets[i];
             numElements = rhs.numElements ;
             return *this;
@@ -80,8 +80,18 @@ namespace custom
         }
         void swap(unordered_set& rhs)
         {
-            //buckets.swap(rhs.buckets);
-            //numElements.swap(rhs.numElements);
+            custom::list<T> tempBuckets[10];
+            for (int i = 0; i < 10; i++)
+                tempBuckets[i] = buckets[i];
+            for (int j = 0; j < 10; j++)
+                buckets[j] = rhs.buckets[j];
+            for (int k = 0; k < 10; k++)
+                rhs.buckets[k] = tempBuckets[k];
+
+            // this isn't as streamlined as using list, but list is rather constraining
+            size_t temp = numElements;
+            numElements = rhs.numElements;
+            rhs.numElements = temp;
         }
 
         // 
@@ -111,7 +121,7 @@ namespace custom
         //
         size_t bucket(const T& t) //returns index of bucket containing T
         {
-            return 99;
+            return numElements = t;
         }
         iterator find(const T& t);
 
@@ -165,7 +175,7 @@ namespace custom
 #endif
 
         custom::list<T> buckets[10];   // exactly 10 buckets
-        int numElements;                // number of elements in the Hash
+        size_t numElements;                // number of elements in the Hash
     };
 
 
