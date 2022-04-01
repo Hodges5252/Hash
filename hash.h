@@ -62,14 +62,16 @@ namespace custom
         //
         unordered_set& operator=(unordered_set& rhs)
         {
-            //buckets = rhs.buckets;
-            //numElements = rhs.numElements ;
+            for (int i = 0; i < 10; i++)
+                buckets[i] = rhs.buckets[i];
+            numElements = rhs.numElements ;
             return *this;
         }
         unordered_set& operator=(unordered_set&& rhs)
         {
-            //buckets.move(rhs.buckets);
-            //numElements.move(rhs.numElements);
+            for (int i = 0; i < 10; i++)
+                buckets[i] = rhs.buckets[i];
+            numElements = (std::move(rhs.numElements));
             return *this;
         }
         unordered_set& operator=(const std::initializer_list<T>& il)
