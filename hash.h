@@ -54,7 +54,10 @@ namespace custom
         template <class Iterator>
         unordered_set(Iterator first, Iterator last)
         {
-
+            for(first; first != last; first++)
+            {
+                insert(*first);
+            }
         }
 
         //
@@ -101,19 +104,26 @@ namespace custom
         class local_iterator;
         iterator begin() // all buckets
         {
+            for (int i = 0; i < 10; i++)
+            {
+                if (!buckets[i].empty())
+                {
+                    return iterator(buckets + i, buckets + 10, buckets[i].begin());
+                }
+            }
             return iterator();
         }
         iterator end()//all buckets
         {
-            return iterator();
+            return iterator(buckets + 10, buckets + 10, buckets[10].end());
         }
         local_iterator begin(size_t iBucket)//one bucket
         {
-            return local_iterator();
+            return local_iterator(buckets[iBucket].begin());
         }
         local_iterator end(size_t iBucket)//one bucket
         {
-            return local_iterator();
+            return local_iterator(buckets[iBucket].end());
         }
 
         //
@@ -137,7 +147,10 @@ namespace custom
         //
         void clear() noexcept
         {
-
+            for (int i = 0; i < 10; i++)
+            {
+                buckets[i].clear();
+            }
             numElements = 0;
         }
         iterator erase(const T& t);
@@ -381,6 +394,14 @@ namespace custom
     template <typename T>
     typename unordered_set <T> ::iterator& unordered_set<T>::iterator::operator ++ ()
     {
+        if (itList.p != nullptr)
+        {
+            itList++;
+        }
+        if (itList.p == nullptr && (pBucket != pBucketEnd))
+        {
+            pBucket++;
+        }
         return *this;
     }
 
@@ -391,6 +412,7 @@ namespace custom
     template <typename T>
     void swap(unordered_set<T>& lhs, unordered_set<T>& rhs)
     {
-        lhs.swap(rhs);
+        std::swap(lhs.numElements, rhs.numElements);
+        std::swap(lhs.buckets, rhs.buckets);
     }
 }
